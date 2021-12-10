@@ -1,4 +1,5 @@
 
+
 // to make a new node project, require the express module
 const express = require("express");
 const https = require("https");
@@ -16,11 +17,29 @@ app.listen(port, () => {
 
 app.get("/", (req, res) => {
   // we can call the https module, a native node module, to make a get request to an API
-  const url = "https://api.openweathermap.org/data/2.5/weather?q=Tokyo&appid=44579a6b9e1e41782e49cbbc73acfa42&units=metric"
+  const url = "lmao";
   // the https.get method takes a url for the API we are making a get request to and a callback function
   https.get(url, (response) => {
     // lets test if the get request works
     console.log(response)
+
+    response.on("data", (data) => {
+      // 1) the response.on method allows us to take a look at the JSON we've gotten back from the GET request
+      console.log(data)
+
+      // 2) we then need to parse that JSON via the JSON.parse method
+      const weatherData = JSON.parse(data)
+      // 3) this returns a JS object
+      console.log(weatherData)
+
+      // 4) we can also convert JS objects into JSON via JSON.stringify() method
+      const testObject = {
+        name: "ナルト",
+        favourite_food: "ラメん",
+        rival: "サスケ"
+      };
+      console.log(JSON.stringify(testObject));
+    })
   })
   res.send("This app is working.")
 })
