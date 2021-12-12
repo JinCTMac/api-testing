@@ -4,10 +4,15 @@
 const express = require("express");
 // to make get requests to an API, we need the HTTPS module
 const https = require("https");
+const bodyParser = require("body-parser");
 
 // initialise a new express app
 const app = express();
 const port = 3000;
+
+// initialise body-parser
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // make app listen to port 3000
 app.listen(port, () => {
@@ -17,8 +22,16 @@ app.listen(port, () => {
 // GET REQUEST - run server via nodemon
 
 app.get("/", (req, res) => {
-  // we can call the https module, a native node module, to make a get request to an API
-  const url =
+  res.sendFile(__dirname + "/index.html")
+})
+
+app.post("/", (req, res) => {
+  // we can set query = to the req.body.cityName so that query becomes the city that the person is searching for
+  // below code handles API call
+  const query = req.body.cityName;
+  const apiKey =
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric`;
+  // we use the native node module https to make a get request to an external server
   // the https.get method takes a url for the API we are making a get request to and a callback function
   https.get(url, (response) => {
     // lets test if the get request works
