@@ -13,7 +13,8 @@ app.listen(port, () => {
 
 // GET request
 app.get("/", (req, res) => {
-  res.send("This app is working!")
+  // res.send("This app is working!")
+  res.sendFile(__dirname + "/index.html")
 })
 
 
