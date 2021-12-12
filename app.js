@@ -17,7 +17,7 @@ app.listen(port, () => {
 
 app.get("/", (req, res) => {
   // we can call the https module, a native node module, to make a get request to an API
-  const url = "lmao";
+  const url =
   // the https.get method takes a url for the API we are making a get request to and a callback function
   https.get(url, (response) => {
     // lets test if the get request works
@@ -32,7 +32,16 @@ app.get("/", (req, res) => {
       // 3) this returns a JS object
       console.log(weatherData)
 
-      // 4) we can also convert JS objects into JSON via JSON.stringify() method
+      // 4) we can then look at the JS object we get back, and then access the main key which contains another object and we can access the temp key to get the value of temperature, etc
+      const temp = weatherData.main.temp;
+      const city = weatherData.name;
+      // the weather object is an array so we access it with array indexing
+      const weatherDescription = weatherData.weather[0].description;
+      console.log(temp)
+      console.log(city)
+      console.log(weatherDescription)
+
+      // ex) we can also convert JS objects into JSON via JSON.stringify() method
       const testObject = {
         name: "ナルト",
         favourite_food: "ラメん",
