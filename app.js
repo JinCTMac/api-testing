@@ -2,6 +2,7 @@
 
 // to make a new node project, require the express module
 const express = require("express");
+// to make get requests to an API, we need the HTTPS module
 const https = require("https");
 
 // initialise a new express app
@@ -32,15 +33,6 @@ app.get("/", (req, res) => {
       // 3) this returns a JS object
       console.log(weatherData)
 
-      // 4) we can then look at the JS object we get back, and then access the main key which contains another object and we can access the temp key to get the value of temperature, etc
-      const temp = weatherData.main.temp;
-      const city = weatherData.name;
-      // the weather object is an array so we access it with array indexing
-      const weatherDescription = weatherData.weather[0].description;
-      console.log(temp)
-      console.log(city)
-      console.log(weatherDescription)
-
       // ex) we can also convert JS objects into JSON via JSON.stringify() method
       const testObject = {
         name: "ナルト",
@@ -48,7 +40,25 @@ app.get("/", (req, res) => {
         rival: "サスケ"
       };
       console.log(JSON.stringify(testObject));
+
+      // 4) we can then look at the JS object we get back, and then access the main key which contains another object and we can access the temp key to get the value of temperature, etc
+      const temp = weatherData.main.temp;
+      const city = weatherData.name;
+      // the weather object is an array so we access it with array indexing
+      const weatherDescription = weatherData.weather[0].description;
+
+      // to access the image associated with the weather given, we can access the .icon value from the JSON and write an image tag with src = to that url
+      const icon = `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`
+
+      // 5) use res.write to write multiple lines to send back, then use res.send() to send them all back at once, as we can only have one res.send() per request
+      // ex) need res.set to make html tags not display along with the res.write
+      res.set("Content-Type", "text/html");
+
+
+      res.write(`<h3>The weather is ${weatherDescription} today.</h3>`);
+      res.write(`<h1>The temperature in ${city} is ${temp} degrees celsius.</h1>`);
+      res.write(`<img src=${icon}>`)
+      res.send()
     })
   })
-  res.send("This app is working.")
 })
