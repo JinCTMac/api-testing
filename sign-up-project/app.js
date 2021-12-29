@@ -7,6 +7,9 @@ const request = require("request");
 
 const app = express();
 
+// specify static folder that holds css/images
+app.use(express.static("public"));
+
 // set port to 3000
 const port = 3000;
 
