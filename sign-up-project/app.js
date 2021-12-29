@@ -1,10 +1,13 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const request = require("request");
 
 // initialise app with express
 
 const app = express();
+
+// set port to 3000
 const port = 3000;
 
 app.listen(port, () => {
